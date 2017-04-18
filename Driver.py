@@ -11,4 +11,4 @@ if __name__ == '__main__':
     print(CP)
     print(CPL)
     print(CPC)
-    print(g.FindStatusReport('a', 10))
+    print(g.FindStatusReport('a', 340))
