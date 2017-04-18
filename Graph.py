@@ -16,7 +16,9 @@ class ActivityGraph(object):
         self.startDate = None
 
     def ReadEdgeList(self, fileName):
-        self.Graph = nx.read_edgelist(fileName, nodetype = int, data=[('time',int), ('cost', float), ('waw', int),], create_using=nx.DiGraph())
+        self.Graph = nx.read_edgelist(fileName, nodetype = str, data=[('time',float), ('cost', float), ('waw', int),], create_using=nx.DiGraph())
+        for (u,v) in self.Graph.edges(data=False):
+            self.Graph[u][v]['time'] *= 30
         self.topological_order = nx.topological_sort(self.Graph)
 
     def DrawGraph(self):
@@ -81,14 +83,15 @@ class ActivityGraph(object):
         criticalPath.reverse()
         criticalPathCost = self.costIncurred[destination]
         nonCriticalEdges = list(set(self.Graph.edges(data=False))-set(criticalPath))
+        plt.figure(figsize=(20,20))
         pos = nx.spectral_layout(self.Graph)
-        nx.draw_networkx_nodes(self.Graph, pos, cmap=plt.get_cmap('jet'))
-        nx.draw_networkx_edges(self.Graph, pos, edgelist=criticalPath, edge_color='r', arrows=True)
+        nx.draw_networkx_nodes(self.Graph, pos, cmap=plt.get_cmap('jet'), font_size = 4)
+        nx.draw_networkx_edges(self.Graph, pos, edgelist=criticalPath, edge_color='r', arrows=True, font_size = 1)
         nx.draw_networkx_edges(self.Graph, pos, edgelist=nonCriticalEdges, arrows=True)
         nx.draw_networkx_labels(self.Graph, pos)
         edge_labels=dict([((u,v,),str(d['time'])+","+str(d['cost']))
                  for u,v,d in self.Graph.edges(data=True)])
-        nx.draw_networkx_edge_labels(self.Graph, pos, edge_labels = edge_labels) 
+        nx.draw_networkx_edge_labels(self.Graph, pos, edge_labels = edge_labels)
         plt.axis('off')
         plt.show()
         return criticalPathLength, criticalPathCost, criticalPath

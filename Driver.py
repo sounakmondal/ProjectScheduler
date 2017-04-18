@@ -3,12 +3,12 @@ import networkx as nx
 
 if __name__ == '__main__':
     g = Graph.ActivityGraph()
-    g.ReadEdgeList('SampleGraph.txt')
+    g.ReadEdgeList('HydroElectric.txt')
     # g.GetAttribute('label')
     # g.DrawGraph()
-    g.FindDistCost(1,5)
-    CPL, CPC, CP = g.FindCriticalPath(1,5)
+    g.FindDistCost('a','n' )
+    CPL, CPC, CP = g.FindCriticalPath('a','n')
     print(CP)
     print(CPL)
     print(CPC)
-    print(g.FindStatusReport(1, 10))
+    print(g.FindStatusReport('a', 10))
