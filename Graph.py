@@ -37,10 +37,11 @@ class ActivityGraph(object):
     def FindAllSimplePaths(self):
         return nx.all_simple_paths(self.Graph, source='a', target='n')
 
-    def FindDistCost(self, source, destination, parameter='time'):
-        # datestart = input("Enter start date (mmm dd yyyy format): ")
-        datestart = 'May 20 2017'
-        self.startDate= datetime.datetime.strptime(datestart, '%b %d %Y')
+
+    
+    def FindDistCost(self, source, destination, startdate, parameter='time'):
+        self.startDate= startdate
+
         nodeList = self.Graph.nodes(data=False)
         dist = {}
         cost = {}
@@ -95,7 +96,7 @@ class ActivityGraph(object):
         nonCriticalEdges = list(set(self.Graph.edges(data=False))-set(criticalPath))
 
         pos = nx.shell_layout(self.Graph)
-        nx.draw_networkx_nodes(self.Graph, pos, cmap=plt.get_cmap('jet'), font_size=4)
+
         nx.draw_networkx_edges(self.Graph, pos, edgelist=criticalPath, edge_color='r', arrows=True)
         nx.draw_networkx_edges(self.Graph, pos, edgelist=nonCriticalEdges, arrows=True)
         nx.draw_networkx_labels(self.Graph, pos)
@@ -123,7 +124,7 @@ class ActivityGraph(object):
                 colors.append('cyan')
             else:
                 colors.append('red')
-        print(completedPaths)
+        #print(completedPaths)
         incompeleteEdges = list(set(self.Graph.edges(data=False))-set(completedPaths))
 
         pos = nx.shell_layout(self.Graph)
