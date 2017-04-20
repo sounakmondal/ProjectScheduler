@@ -26,3 +26,7 @@ Note that the duration also takes into account the number of days per week corre
 
 The software also supports a system delivering status report at various time durations from project start which shows us the completed activities and nodes along with the nodes expecting completion. This can easily be deduced from the dynamic programming table built during critical path finding.
 
+Instructions
+-------------
+
+Download all files in the repo, put them in a common directory and run Driver.py using Python 3.5.1 or higher.
